@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import s from './HomePage.module.sass'
 import { Icell } from '../../interfaces/Icell'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -21,6 +22,7 @@ function HomePage() {
 
   const [profiles, setProfiles] = useState<Icell[]>()
   const [sum, setSum] = useState<number>(0)
+  const navigate = useNavigate()
   return (
     <div className={s.container}>
       <div className={s.innerContainer}>
@@ -53,7 +55,7 @@ function HomePage() {
               <div className={s.row} key={index}>
                 <div className={s.cell}>{elem.service}Название</div>
                 <div className={s.cell}>{elem.price}5000 руб.</div>
-                <div className={s.cell}>{elem.name}</div>
+                <div className={s.cell} onClick={() => navigate(`/user/${elem.user_id}`)}>{elem.name}</div>
                 <div className={s.cell}>{elem.birth_data}</div>
               </div>
             )
