@@ -31,7 +31,7 @@ function HomePage() {
     console.log(elem.user_id, !elem.done);
     
     try {
-      const response = await fetch('http://localhost:8080/api/updateDone', {
+      const response = await fetch('https://db-project.vercel.app/api/updateDone', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
