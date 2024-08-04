@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import s from './HomePage.module.sass'
+import s from './ArchivePage.module.sass'
 import { Icell } from '../../interfaces/Icell'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
 
 
 
-function HomePage() {
+function ArchivePage() {
 
   useEffect(() => {
     const getData = async () => {
       const response = await fetch('https://db-project.vercel.app/api/profiles');
       let data = await response.json();
-      data = data.filter((elem:Icell) => elem.done == false)
+      data = data.filter((elem:Icell) => elem.done == true)
       setProfiles(data)
       // let sum = 0
       // for(let i = 0; i < data.length; i++){
@@ -28,10 +28,10 @@ function HomePage() {
   const [day, setDay] = useState<number>(new Date().getDate());
 
   const updateDone = async (elem: Icell) => {
-    console.log(elem.user_id, !elem.done);
+    console.log(elem.id, !elem.done);
     
     try {
-      const response = await fetch('http://localhost:8080/api/updateDone', {
+      const response = await fetch('https://db-project.vercel.app/api/updateDone', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -77,7 +77,7 @@ function HomePage() {
                 <div className={s.cell}>{elem.service}Название</div>
                 <div className={s.cell}>{elem.cost} руб.</div>
                 <div className={s.cell} onClick={() => navigate(`/user/${elem.user_id}`)}>{elem.name}</div>
-                <div className={s.cell} style={+elem.date.slice(5, 7) >= month && +elem.date.slice(8, 10) >= day ? {background: 'red', color: 'white'} : {}}>{elem.date.slice(0, 10)}</div>
+                <div className={s.cell}>{elem.date.slice(0, 10)}</div>
                 <div className={s.cell}><input type="checkbox" checked={elem.done} onChange={() => updateDone(elem)}/></div>
               </div>
             )
@@ -89,4 +89,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default ArchivePage

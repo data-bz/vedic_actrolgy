@@ -24,7 +24,7 @@ function UserPage() {
     <div className={s.container}>
         <div className={s.innerContainer}>
             <div className={s.leftSide}>
-                <p className={s.block}>ФИО</p>
+                <p className={s.block}>Имя и Фамилия</p>
                 <p className={s.block}>Дата рождения</p>
                 <p className={s.block}>Время рождения</p>
                 <p className={s.block}>Место рождения</p>
@@ -35,7 +35,7 @@ function UserPage() {
                 <p className={s.block}>{profile?.birth_data}</p>
                 <p className={s.block}>{profile?.birth_time}</p>
                 <p className={s.block}>{profile?.country} - {profile?.city}</p>
-                <p className={s.block}>Вопрос/пакет</p>
+                <p className={s.block}>{profile?.service}</p>
             </div>
         </div>
     </div>
