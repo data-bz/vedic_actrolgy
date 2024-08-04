@@ -74,7 +74,7 @@ function HomePage() {
           {profiles &&
             profiles.map((elem, index) =>
               <div className={s.row} key={index}>
-                <div className={s.cell}>{elem.service}Название</div>
+                <div className={s.cell}>{elem.service}</div>
                 <div className={s.cell}>{elem.cost} руб.</div>
                 <div className={s.cell} onClick={() => navigate(`/user/${elem.user_id}`)}>{elem.name}</div>
                 <div className={s.cell} style={+elem.date.slice(5, 7) >= month && +elem.date.slice(8, 10) >= day ? {background: 'red', color: 'white'} : {}}>{elem.date.slice(0, 10)}</div>
