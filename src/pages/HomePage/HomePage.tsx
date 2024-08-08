@@ -12,7 +12,7 @@ function HomePage() {
     const getData = async () => {
       const response = await fetch('https://db-project.vercel.app/api/profiles');
       let data = await response.json();
-      data = data.filter((elem:Icell) => elem.done == false)
+      data = data.filter((elem:Icell) => elem.done == false || elem.done == null)
       setProfiles(data)
       // let sum = 0
       // for(let i = 0; i < data.length; i++){
