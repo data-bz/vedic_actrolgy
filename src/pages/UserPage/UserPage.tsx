@@ -12,10 +12,10 @@ function UserPage() {
         const getData = async () => {
           const response = await fetch('https://db-project.vercel.app/api/profiles');
           const data = await response.json();
-          const person = data.find((elem: Icell) => elem.user_id == id)
-          console.log(person);
-          
-          setProfile(person)
+          if(id){
+            const person = data.find((elem: Icell) => elem.id == +id)
+            setProfile(person)
+          }          
         }
         getData()
       }, [id])
