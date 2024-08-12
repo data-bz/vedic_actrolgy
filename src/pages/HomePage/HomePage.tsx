@@ -14,6 +14,8 @@ function HomePage() {
       let data = await response.json();
       data = data.filter((elem:Icell) => elem.done == false || elem.done == null)
       setProfiles(data)
+      console.log(data);
+      
       // let sum = 0
       // for(let i = 0; i < data.length; i++){
         //   sum += 
@@ -77,7 +79,7 @@ function HomePage() {
                 <div className={s.cell}>{elem.service}</div>
                 <div className={s.cell}>{elem.cost} руб.</div>
                 <div className={s.cell} onClick={() => navigate(`/user/${elem.id}`)}>{elem.name}</div>
-                <div className={s.cell} style={+elem.date.slice(5, 7) >= month && +elem.date.slice(8, 10) >= day ? {background: 'red', color: 'white'} : {}}>{elem.date.slice(0, 10)}</div>
+                <div className={s.cell} style={+elem.date_to_do.slice(3, 5) >= month && +elem.date_to_do.slice(0, 2) >= day ? {background: 'red', color: 'white'} : {}}>{elem.date_to_do.slice(0, 10)}</div>
                 <div className={s.cell}><input type="checkbox" checked={elem.done} onChange={() => updateDone(elem)}/></div>
               </div>
             )

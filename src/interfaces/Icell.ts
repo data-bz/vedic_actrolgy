@@ -2,7 +2,7 @@ export interface Icell {
     service: string,
     cost: number,
     name: string,
-    date: string,
+    date_to_do: string,
     birth_data: string,
     user_id: string,
     birth_time: string,

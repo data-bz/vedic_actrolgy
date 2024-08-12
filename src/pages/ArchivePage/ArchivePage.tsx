@@ -77,7 +77,7 @@ function ArchivePage() {
                 <div className={s.cell}>{elem.service}</div>
                 <div className={s.cell}>{elem.cost} руб.</div>
                 <div className={s.cell} onClick={() => navigate(`/user/${elem.user_id}`)}>{elem.name}</div>
-                <div className={s.cell}>{elem.date.slice(0, 10)}</div>
+                <div className={s.cell}>{elem.date_to_do.slice(0, 10)}</div>
                 <div className={s.cell}><input type="checkbox" checked={elem.done} onChange={() => updateDone(elem)}/></div>
               </div>
             )
