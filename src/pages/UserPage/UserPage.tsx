@@ -7,6 +7,7 @@ import s from './UserPage.module.sass'
 function UserPage() {
     const {id} = useParams()
     const [profile, setProfile] = useState<Icell>()
+    const[message, setMessage] = useState('')
 
     const navigate = useNavigate();
 
@@ -39,6 +40,42 @@ function UserPage() {
       }
     };
 
+    const sendMessage = async (userId: any, message:any) => {
+      const botToken = '6886731232:AAEs9WhqgO8FJBZmr18MIPr5LPBsfAtzyiU';
+    
+      // Формирование URL для API-запроса
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    
+      // Параметры запроса
+      const data = {
+        chat_id: userId,
+        text: message
+      };
+      try {
+        // Отправка запроса с помощью fetch
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+    
+        // Проверка ответа
+        if (response.ok) {
+          console.log('Сообщение успешно отправлено');
+        } else {
+          console.error('Ошибка при отправке сообщения');
+        }
+      } catch (error) {
+        console.error('Ошибка:', error);
+      }
+    }
+
+    const handleChangeMessage = (e:any) => {
+      setMessage(e.target.value)
+    }
+
     useEffect(() => {
         const getData = async () => {
           const response = await fetch('https://db-project.vercel.app/api/profiles');
@@ -69,6 +106,8 @@ function UserPage() {
                 <p className={s.block}>{profile?.country} - {profile?.city}</p>
                 <p className={s.block}>{profile?.service}</p>
             </div>
+            <input type="text" placeholder='Ссылка на видео' onChange={(e) => handleChangeMessage(e)} />
+            <button className={s.sendBtn} onClick={() => sendMessage(profile?.user_id, message)}>Отправить сообщение</button>
             <button className={s.doneBtn} onClick={() => profile ? updateDone(profile) : null}>Выполнено</button>
         </div>
     </div>
