@@ -7,7 +7,7 @@ import s from './UserPage.module.sass'
 function UserPage() {
     const {id} = useParams()
     const [profile, setProfile] = useState<Icell>()
-    const[message, setMessage] = useState('')
+    const[message, setMessage] = useState<any[]>()
 
     const navigate = useNavigate();
 
@@ -77,16 +77,30 @@ function UserPage() {
     }
 
     useEffect(() => {
-        const getData = async () => {
-          const response = await fetch('https://db-project.vercel.app/api/profiles');
-          const data = await response.json();
-          if(id){
-            const person = data.find((elem: Icell) => elem.id == +id)
-            setProfile(person)
-          }          
+      const getData = async () => {
+        const response = await fetch('https://db-project.vercel.app/api/profiles');
+        const messagesResp = await fetch('https://db-project.vercel.app/api/messages'); 
+        const data = await response.json();
+        const messages = await messagesResp.json();
+    
+        if (id) {            
+          const person = data.find((elem: Icell) => elem.id == +id);
+          setProfile(person);
+    
+          // Убедитесь, что profile установлен, прежде чем фильтровать сообщения
+          if (person && messages.length > 0) {
+            const filteredMessages = messages.filter((elem:any) => elem.user_id == person.user_id);
+            console.log(filteredMessages, 'Filtered messages');
+            setMessage(filteredMessages)
+          }
+        } else {
+          console.log(messages, 'All messages');
         }
-        getData()
-      }, [id])
+      }
+      
+      getData();
+    }, [id]);
+    
     
   return (
     <div className={s.container}>
@@ -109,7 +123,19 @@ function UserPage() {
             <input type="text" placeholder='Ссылка на видео' onChange={(e) => handleChangeMessage(e)} />
             <button className={s.sendBtn} onClick={() => sendMessage(profile?.user_id, message)}>Отправить сообщение</button>
             <button className={s.doneBtn} onClick={() => profile ? updateDone(profile) : null}>Выполнено</button>
-        </div>
+
+              {
+                message ?
+                <div className={s.messages}>
+                  {
+                    message.map((elem:any) => 
+                    <div className={elem.type == "human" ? s.messageHuman : s.messageBot}>{elem.message}</div>
+                    )
+                  }  
+                </div>
+                : <p></p>
+              }
+            </div>
     </div>
   )
 }

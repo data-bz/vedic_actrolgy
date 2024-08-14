@@ -1,13 +1,13 @@
 export interface Icell {
-    service: string,
-    cost: number,
-    name: string,
+    service: string | null,
+    cost: number | null,
+    name: string | null,
     date_to_do: string,
-    birth_data: string,
-    user_id: string,
-    birth_time: string,
-    country: string,
-    city: string, 
+    birth_data: string | null,
+    user_id: number,
+    birth_time: string | null,
+    country: string | null,
+    city: string | null, 
     done: boolean,
     id: number
 }
