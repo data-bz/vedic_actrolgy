@@ -79,7 +79,18 @@ function HomePage() {
                 <div className={s.cell}>{elem.service}</div>
                 <div className={s.cell}>{elem.cost ? elem.cost : 0} руб.</div>
                 <div className={s.cell} onClick={() => navigate(`/user/${elem.id}`)}>{elem.name}</div>
-                <div className={s.cell} style={elem.date_to_do && +elem.date_to_do.slice(3, 5) <= month && +elem.date_to_do.slice(0, 2) <= day ? {background: 'red', color: 'white'} : {}}>{elem.date_to_do}</div>
+                <div 
+  className={s.cell} 
+  style={elem.date_to_do && 
+         typeof elem.date_to_do === 'string' && 
+         elem.date_to_do.trim() !== '' && 
+         +elem.date_to_do.slice(3, 5) <= month && 
+         +elem.date_to_do.slice(0, 2) <= day 
+         ? {background: 'red', color: 'white'} 
+         : {}}
+>
+  {elem.date_to_do}
+</div>
                 <div className={s.cell}><input type="checkbox" checked={elem.done} onChange={() => updateDone(elem)}/></div>
               </div>
             )

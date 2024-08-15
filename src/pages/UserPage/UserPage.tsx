@@ -7,7 +7,10 @@ import s from './UserPage.module.sass'
 function UserPage() {
     const {id} = useParams()
     const [profile, setProfile] = useState<Icell>()
+    const [allOrders, setAllOrders] = useState<Icell[]>()
     const[message, setMessage] = useState<any[]>()
+    const [showMore ,setShowMore] = useState<boolean>(false);
+    const [money, setMoney] = useState<number>(0)
 
     const navigate = useNavigate();
 
@@ -85,7 +88,18 @@ function UserPage() {
     
         if (id) {            
           const person = data.find((elem: Icell) => elem.id == +id);
+          const orders = data.filter((elem: Icell) => elem.client_id == person.client_id);
+          let money = 0;
+          for(let i = 0; i < orders.length; i++){
+            money += +orders[i].cost
+            console.log(orders[i].cost);
+            
+          }
+          console.log("money", money);
+          
+          setMoney(money)
           setProfile(person);
+          setAllOrders(orders);
     
           // Убедитесь, что profile установлен, прежде чем фильтровать сообщения
           if (person && messages.length > 0) {
@@ -123,17 +137,42 @@ function UserPage() {
             <input type="text" placeholder='Ссылка на видео' onChange={(e) => handleChangeMessage(e)} />
             <button className={s.sendBtn} onClick={() => sendMessage(profile?.user_id, message)}>Отправить сообщение</button>
             <button className={s.doneBtn} onClick={() => profile ? updateDone(profile) : null}>Выполнено</button>
+            <button className={s.moreBtn} onClick={() => setShowMore(prev => !prev)}>Показать дополнительную информацию</button>
+            {
+              showMore && 
+              <div className={s.orderList}>
+                <h4>Список заказов:</h4>
+                {
+                  allOrders?.map((elem) => 
+                    <div className={s.orders}>
+                      Вопрос/Пакет: {elem.service} |  Дата: {elem?.order_date} | Стоимость: {elem.cost} руб.
 
+                    </div>
+                  )
+                }
+              </div>
+            }
+            {
+              showMore && 
+              <div className={s.money}>
+                Итого: {money} руб.
+              </div>
+            }
+            {
+              showMore && 
+              <div className={s.money}>
+                <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="" />{profile?.username}
+              </div>
+            }
               {
-                message ?
+                showMore &&
                 <div className={s.messages}>
                   {
-                    message.map((elem:any) => 
+                    message?.map((elem:any) => 
                     <div className={elem.type == "human" ? s.messageHuman : s.messageBot}>{elem.message}</div>
                     )
                   }  
                 </div>
-                : <p></p>
               }
             </div>
     </div>
