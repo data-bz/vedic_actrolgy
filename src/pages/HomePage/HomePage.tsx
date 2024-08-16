@@ -67,9 +67,9 @@ function HomePage() {
 
           <div className={s.titles}>
             <div className={s.cell}>Услуга</div>
-            <div className={s.cell}>Стоимость <img src="/images/Polygon 1.png" alt="" /></div>
+            <div className={s.cell}>Стоимость</div>
             <div className={s.cell}>Пользователь</div>
-            <div className={s.cell}>Дата <img src="/images/Polygon 2.png" alt="" /></div>
+            <div className={s.cell}>Дата</div>
             <div className={s.cell}>Выполнено</div>
           </div>
 

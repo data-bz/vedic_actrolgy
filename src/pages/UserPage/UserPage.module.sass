@@ -47,7 +47,7 @@
 
 
         input
-            width: 200px
+            width: 500px
             height: 40px
 
             border-radius: 8px
@@ -99,28 +99,67 @@
                 color: black
 
 
+
         .messages
             display: flex
             flex-direction: column
 
-            justify-content: center
-            width: 100%
+            justify-content: flex-start
+            
+            width: 60%
+            height: 600px
 
-            .messageHuman
-                padding: 3px 10px 3px 10px
-                border-radius: 3px
-                background: #c3d8c1
-                font-family: "Inter", sans-serif
+            border: 1px solid gray
+            margin-top: 30px
+
+            border-radius: 10px
+            overflow-y: scroll
+            padding: 0 15px 15px 15px 
+
+
+            .humanMessageContainer, .botMessageContainer
+                background: #cce5ff
+
+                display: flex
+                flex-direction: column
+
+                justify-content: flex-end
+
                 margin-top: 20px
-                left: 0px
+                border-radius: 15px 0 15px 15px
+
+                padding: 10px
+
+                
+                .messageHuman
+                    padding: 3px 10px 3px 10px
+                    border-radius: 3px
+                    font-family: "Inter", sans-serif
+                    margin-top: 5px
+                    left: 0px
 
 
-            .messageBot
-                padding: 3px 10px 3px 10px
-                border-radius: 10px
-                background: #c7f3fa
-                font-family: "Inter", sans-serif
-                margin-top: 20px
+                .messageBot
+                    padding: 3px 10px 3px 10px
+                    border-radius: 10px
+                    
+                    font-family: "Inter", sans-serif
+                    margin-top: 5px
+
+                    right: 0
+                    margin-left: auto
+
+                p
+                    margin: 0
+                    margin-top: 20px
+                    font-family: "Inter", sans-serif
+                    font-weight: bolder
+
+            .humanMessageContainer
+                background: #f8f9fa
+                width: 80%
+                border-radius: 15px 15px 15px 0
+
                 
 
         .orderList 

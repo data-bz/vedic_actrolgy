@@ -8,7 +8,8 @@ function UserPage() {
     const {id} = useParams()
     const [profile, setProfile] = useState<Icell>()
     const [allOrders, setAllOrders] = useState<Icell[]>()
-    const[message, setMessage] = useState<any[]>()
+    const[message, setMessage] = useState<string>("")
+    const[chat, setChat] = useState<any[]>()
     const [showMore ,setShowMore] = useState<boolean>(false);
     const [money, setMoney] = useState<number>(0)
 
@@ -23,7 +24,7 @@ function UserPage() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ id: elem.id, done: !elem.done })
+          body: JSON.stringify({ id: elem.id, done: true })
         });
     
         // Проверка, что ответ успешный
@@ -31,19 +32,17 @@ function UserPage() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
     
-        const responseData = await response.text(); // Чтение как текст
-        console.log('Response Data:', responseData);
-    
-        const data = JSON.parse(responseData); // Парсинг JSON из текста
+        const responseData = await response.text(); // Чтение как текст    
+        const data = JSON.parse(responseData);
         alert("Задача выполнена")
-        window.location.reload()
+        navigate(-1)
         return data;
       } catch (error) {
         console.error('Error:', error);
       }
     };
 
-    const sendMessage = async (userId: any, message:any) => {
+    const sendMessage = async (userId: any, message:string) => {
       const botToken = '6886731232:AAEs9WhqgO8FJBZmr18MIPr5LPBsfAtzyiU';
     
       // Формирование URL для API-запроса
@@ -66,9 +65,10 @@ function UserPage() {
     
         // Проверка ответа
         if (response.ok) {
-          console.log('Сообщение успешно отправлено');
+          alert('Сообщение успешно отправлено');
+          setMessage("")
         } else {
-          console.error('Ошибка при отправке сообщения');
+          alert('Ошибка при отправке сообщения');
         }
       } catch (error) {
         console.error('Ошибка:', error);
@@ -100,12 +100,13 @@ function UserPage() {
           setMoney(money)
           setProfile(person);
           setAllOrders(orders);
+          setMessage(`Здравствуйте, ${person?.name}. Ваш ответ на анкету готов: `)
     
           // Убедитесь, что profile установлен, прежде чем фильтровать сообщения
           if (person && messages.length > 0) {
             const filteredMessages = messages.filter((elem:any) => elem.user_id == person.user_id);
             console.log(filteredMessages, 'Filtered messages');
-            setMessage(filteredMessages)
+            setChat(filteredMessages)
           }
         } else {
           console.log(messages, 'All messages');
@@ -134,7 +135,7 @@ function UserPage() {
                 <p className={s.block}>{profile?.country} - {profile?.city}</p>
                 <p className={s.block}>{profile?.service}</p>
             </div>
-            <input type="text" placeholder='Ссылка на видео' onChange={(e) => handleChangeMessage(e)} />
+            <input type="text" placeholder='Ссылка на видео' value={message} onChange={(e) => handleChangeMessage(e)} />
             <button className={s.sendBtn} onClick={() => sendMessage(profile?.user_id, message)}>Отправить сообщение</button>
             <button className={s.doneBtn} onClick={() => profile ? updateDone(profile) : null}>Выполнено</button>
             <button className={s.moreBtn} onClick={() => setShowMore(prev => !prev)}>Показать дополнительную информацию</button>
@@ -168,8 +169,11 @@ function UserPage() {
                 showMore &&
                 <div className={s.messages}>
                   {
-                    message?.map((elem:any) => 
-                    <div className={elem.type == "human" ? s.messageHuman : s.messageBot}>{elem.message}</div>
+                    chat?.map((elem:any) => 
+                    <div className={elem.type == "human" ? s.humanMessageContainer : s.botMessageContainer}>
+                      <p className={elem.type == "human" ? s.messageHuman : s.messageBot}>{elem.type == "human" ? profile?.name : "Бот"}</p>
+                      <div className={elem.type == "human" ? s.messageHuman : s.messageBot}>{elem.message}</div>
+                    </div>
                     )
                   }  
                 </div>
