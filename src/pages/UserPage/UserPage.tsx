@@ -95,17 +95,17 @@ function UserPage() {
             console.log(orders[i].cost);
             
           }
-          console.log("money", money);
+          
           
           setMoney(money)
           setProfile(person);
           setAllOrders(orders);
           setMessage(`Здравствуйте, ${person?.name}. Ваш ответ на анкету готов: `)
-    
+        
+          
           // Убедитесь, что profile установлен, прежде чем фильтровать сообщения
           if (person && messages.length > 0) {
             const filteredMessages = messages.filter((elem:any) => elem.user_id == person.user_id);
-            console.log(filteredMessages, 'Filtered messages');
             setChat(filteredMessages)
           }
         } else {
@@ -173,6 +173,7 @@ function UserPage() {
                     <div className={elem.type == "human" ? s.humanMessageContainer : s.botMessageContainer}>
                       <p className={elem.type == "human" ? s.messageHuman : s.messageBot}>{elem.type == "human" ? profile?.name : "Бот"}</p>
                       <div className={elem.type == "human" ? s.messageHuman : s.messageBot}>{elem.message}</div>
+                      <span style={elem.type == "bot" ? {textAlign: "right", paddingRight: "10px"} : {paddingLeft: "10px"}}>{elem.date_message}</span>
                     </div>
                     )
                   }  

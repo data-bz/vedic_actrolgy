@@ -5,7 +5,8 @@ function Header() {
   return (
     <div className={s.container}>
         <Link className={s.link} to={'/statistic'}>Статистика</Link>
-        <Link className={s.link} to={'/'}>Пользователи</Link>
+        <Link className={s.link} to={'/find'}>Пользователи</Link>
+        <Link className={s.link} to={'/'}>Заказы</Link>
         <Link className={s.link} to={'/archive'}>Архив</Link>
     </div>
   )
