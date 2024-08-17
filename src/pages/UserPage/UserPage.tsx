@@ -63,10 +63,19 @@ function UserPage() {
           body: JSON.stringify(data),
         });
     
+        
+        const responseBD = await fetch('https://db-project.vercel.app/api/sendMessage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId, message }),
+        });
         // Проверка ответа
         if (response.ok) {
           alert('Сообщение успешно отправлено');
           setMessage("")
+          window.location.reload()
         } else {
           alert('Ошибка при отправке сообщения');
         }
@@ -92,8 +101,6 @@ function UserPage() {
           let money = 0;
           for(let i = 0; i < orders.length; i++){
             money += +orders[i].cost
-            console.log(orders[i].cost);
-            
           }
           
           
@@ -106,6 +113,8 @@ function UserPage() {
           // Убедитесь, что profile установлен, прежде чем фильтровать сообщения
           if (person && messages.length > 0) {
             const filteredMessages = messages.filter((elem:any) => elem.user_id == person.user_id);
+            console.log(filteredMessages);
+            
             setChat(filteredMessages)
           }
         } else {
