@@ -13,4 +13,5 @@ export interface Icell {
     id: number, 
     order_date: string,
     client_id: string,
+    header_info: string
 }

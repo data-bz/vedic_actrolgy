@@ -76,7 +76,7 @@ function HomePage() {
           {profiles &&
             profiles.map((elem, index) =>
               <div className={s.row} key={index}>
-                <div className={s.cell}>{elem.service}</div>
+                <div className={s.cell}>{elem.header_info}</div>
                 <div className={s.cell}>{elem.cost ? elem.cost : 0} руб.</div>
                 <div className={s.cell} onClick={() => navigate(`/user/${elem.id}`)}>{elem.name}</div>
                 <div 
