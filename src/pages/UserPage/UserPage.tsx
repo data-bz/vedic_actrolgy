@@ -15,14 +15,17 @@ function UserPage() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+      if (messagesEndRef.current) {
+          messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+  };
 
-    useEffect(() => {
-        scrollToBottom();
-    }, [chat]);
+  // Эффект для прокрутки при изменении сообщений
+  useEffect(() => {
+      scrollToBottom();
+  }, [chat]);
+
+
 
     const updateDone = async (elem: Icell) => {
         try {
