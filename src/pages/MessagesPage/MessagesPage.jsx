@@ -66,16 +66,44 @@ function MessagesPage() {
                     body: formData,
                 });
 
-                if (response.ok) {
-                    alert(`Сообщение отправлено`);
-                } else {
-                    console.error(`Failed to send message to user ${user.id}`);
-                }
             } catch (error) {
                 console.error(`Error sending message to user ${user.id}:`, error);
             }
         }
+        alert("Сообщение отправлено")
     };
+    const sendMessageForAll = async() => {
+        const botToken = '6886731232:AAEs9WhqgO8FJBZmr18MIPr5LPBsfAtzyiU';
+        for (const user of users) {
+            const url = photo
+                ? `https://api.telegram.org/bot${botToken}/sendPhoto`
+                : `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            const formData = new FormData();
+            formData.append('chat_id', user.id);
+
+            if (photo) {
+                formData.append('photo', photo);
+                if (message) {
+                    formData.append('caption', message);
+                }
+            } else {
+                formData.append('text', message);
+            }
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+            } catch (error) {
+                console.error(`Error sending message to user ${user.id}:`, error);
+            }
+            
+        }
+        alert("Сообщение отправлено")
+    }
 
     return (
         <div className={s.container}>
@@ -105,6 +133,7 @@ function MessagesPage() {
                     <button onClick={() => sendMessage("video")}>Видео от астролога</button>
                     <button onClick={() => sendMessage("articles")}>Обучающие статьи</button>
                 </div>
+                <button onClick={() => sendMessageForAll()}>Рассылка для всех</button>
             </div>
         </div>
     );
