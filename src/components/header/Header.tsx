@@ -8,6 +8,7 @@ function Header() {
         <Link className={s.link} to={'/find'}>Пользователи</Link>
         <Link className={s.link} to={'/'}>Заказы</Link>
         <Link className={s.link} to={'/archive'}>Архив</Link>
+        <Link className={s.link} to={'/messages'}>Рассылки</Link>
     </div>
   )
 }

@@ -95,16 +95,6 @@ function StatisticPage() {
                         <div className={s.value}>{profiles?.length}</div>
                     </div>
                 </div>
-                <input
-                    type="text"
-                    onChange={handleChangeMessage}
-                    value={message}
-                    placeholder='Сообщение для рассылки'
-                    disabled={sending}
-                />
-                <button onClick={sendMessagesToAll} disabled={sending}>
-                    {sending ? 'Отправка...' : 'Отправить'}
-                </button>
             </div>
         </div>
     );

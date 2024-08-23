@@ -5,6 +5,7 @@ import UserPage from "./pages/UserPage/UserPage";
 import StatisticPage from "./pages/StatisticPage/StatisticPage";
 import ArchivePage from "./pages/ArchivePage/ArchivePage";
 import FindPage from "./pages/FindPage/FindPage";
+import MessagesPage from "./pages/MessagesPage/MessagesPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/statistic" element={<StatisticPage/>}></Route>
         <Route path="/archive" element={<ArchivePage/>}></Route>
         <Route path="/find" element={<FindPage/>}></Route>
+        <Route path="/messages" element={<MessagesPage/>}></Route>
         <Route path="/user/:id" element={<UserPage/>}></Route>
       </Routes>
     </div>
